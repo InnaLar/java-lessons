@@ -3,12 +3,12 @@ package org.example.hw1;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Box implements IShape {
+public class BoxShape implements Shape {
     private final double volume;
-    private final List<IShape> iShapeList;
+    private final List<Shape> shapeList;
 
-    public Box(final double volume) {
-        this.iShapeList = new ArrayList<>();
+    public BoxShape(final double volume) {
+        this.shapeList = new ArrayList<>();
         this.volume = volume;
     }
 
@@ -19,17 +19,17 @@ public class Box implements IShape {
 
     public double getShapesVolume() {
         double boxVolume = 0;
-        for (IShape shape : iShapeList) {
+        for (final Shape shape : shapeList) {
             boxVolume += shape.getVolume();
         }
         return boxVolume;
     }
 
-    public boolean add(final IShape shape) {
+    public boolean add(final Shape shape) {
         if (this.getShapesVolume() + shape.getVolume() > this.getVolume()) {
             return false;
         }
-        iShapeList.add(shape);
+        shapeList.add(shape);
         return true;
     }
 }

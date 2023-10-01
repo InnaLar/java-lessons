@@ -1,6 +1,6 @@
 package org.example.hw1;
 
-public class Pyramid implements IShape {
+public class Pyramid implements Shape {
     private static final double ONE_THREE = 1.0 / 3.0;
     private final double height;
     private final double square;
@@ -22,6 +22,5 @@ public class Pyramid implements IShape {
     public double getVolume() {
         return ONE_THREE * getHeight() * getSquare();
     }
-
 
 }
