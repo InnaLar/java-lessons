@@ -1,6 +1,6 @@
 public abstract class SolidOfRevolution extends Shape {
     double radius;
-    public void SetRadius(double radius)
+    public void setRadius(double radius)
     {
         this.radius = radius;
     }
