@@ -2,12 +2,11 @@ package org.example.hw2;
 
 public class MyArray {
     private static final int arrayDimension = 4;
-    public static int arraySum(String[][] arr) throws MyArraySizeException,MyArrayDataException {
-        if (arr.length!=arrayDimension){
+    public static int arraySum(String[][] arr) throws MyArraySizeException, MyArrayDataException {
+        if (arr.length != arrayDimension){
             throw new MyArraySizeException();
         }
-        for (String[] subArray:arr
-             ) {
+        for (String[] subArray : arr) {
             if (subArray.length!=arrayDimension){
                 throw new MyArraySizeException();
             }

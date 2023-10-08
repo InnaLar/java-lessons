@@ -1,7 +1,9 @@
 package org.example.hw3;
 
-public class Apple extends Fruit{
-    public Apple(){
-        super(1.0f);
+public class Apple extends Fruit {
+
+    @Override
+    public float getWeight() {
+        return 1.0f;
     }
 }
