@@ -1,28 +1,34 @@
 package org.example.hw3;
-import java.util.List;
-import java.util.ArrayList;
 
-public class Box <T extends Fruit>{
-    private final float delta = 0.0001f;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Box<T extends Fruit> {
+    static float delta = 0.0001f;
     private List<T> boxFruit;
-    public Box(){
+
+    public Box() {
         boxFruit = new ArrayList<T>();
     }
-    public void add(T fruit){
+
+    public void add(final T fruit) {
         boxFruit.add(fruit);
     }
-    public float getWeight(){
+
+    public float getWeight() {
         float sumWeightFruits = 0;
         for (T fruit:boxFruit
              ) {
-            sumWeightFruits+=fruit.getWeight();
+            sumWeightFruits += fruit.getWeight();
         }
         return sumWeightFruits;
     }
-    public boolean compareWeight(Box<?> another){
-        return Math.abs(this.getWeight()-another.getWeight())<delta;
+
+    public boolean compareWeight(final Box<?> another) {
+        return Math.abs(this.getWeight() - another.getWeight()) < delta;
     }
-    public void addWholeBox(Box<T> another){
+
+    public void addWholeBox(final Box<T> another) {
         boxFruit.addAll(another.boxFruit);
         another.boxFruit = null;
         }

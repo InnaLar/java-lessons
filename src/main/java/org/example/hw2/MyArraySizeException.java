@@ -1,4 +1,4 @@
 package org.example.hw2;
 
-public class MyArraySizeException extends ArrayIndexOutOfBoundsException{
+public class MyArraySizeException extends ArrayIndexOutOfBoundsException {
 }
