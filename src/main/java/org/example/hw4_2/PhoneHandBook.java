@@ -6,20 +6,22 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 public class PhoneHandBook {
-    final Map<String, SortedSet<String>> hmPhoneBook = new HashMap<>();
+    final Map<String, SortedSet<String>> phoneBook = new HashMap<>();
+
+    // todo: TreeSet как работает (PhoneNumber)
 
     public void add(final String secondName, final String phoneNumber) {
         final SortedSet<String> phoneNumbers;
-        if (hmPhoneBook.containsKey(secondName)) {
-            phoneNumbers = hmPhoneBook.get(secondName);
+        if (phoneBook.containsKey(secondName)) {
+            phoneNumbers = phoneBook.get(secondName);
         } else {
             phoneNumbers = new TreeSet<>();
         }
         phoneNumbers.add(phoneNumber);
-        hmPhoneBook.put(secondName, phoneNumbers);
+        phoneBook.put(secondName, phoneNumbers);
     }
 
     public SortedSet<String> get(final String secondName) {
-        return hmPhoneBook.getOrDefault(secondName, null);
+        return phoneBook.getOrDefault(secondName, null);
     }
 }

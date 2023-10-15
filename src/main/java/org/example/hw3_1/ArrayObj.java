@@ -1,20 +1,15 @@
 package org.example.hw3_1;
 
-public class ArrayObj<T extends Object> {
+import java.util.ArrayList;
 
-    private T[] arrayObj;
+public class ArrayObj {
 
-    public ArrayObj(final T[] arrayObj) {
-        this.arrayObj = arrayObj;
-    }
-
-    public void swap(final int i, final int j) {
-        if (i >= arrayObj.length || j >= arrayObj.length) {
-               throw new MyArrayMethodException();
-            }
-        final T t;
-        t = arrayObj[j];
-        arrayObj[j] = arrayObj[i];
-        arrayObj[i] = t;
+    public static <T> void swap(final T[] elements, final int i, final int j) {
+        if (i >= elements.length || j >= elements.length) {
+            throw new MyArrayMethodException();
+        }
+        final T t = elements[j];
+        elements[j] = elements[i];
+        elements[i] = t;
     }
 }
