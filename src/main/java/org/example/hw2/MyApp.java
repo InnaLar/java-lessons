@@ -1,6 +1,7 @@
 package org.example.hw2;
 
 public class MyApp {
+
     public static void main(final String[] args) {
         //String[][] intArr = {{"1","2","3","4"},{"5","6","7","8"},{"9","10","11","12"},{"13","14","15","16"}};
         //String[][] intArr = {{"1","1","1","1"},{"1","1","1","1"},{"1","1","1","1"},{"1","1","1","1"}};
