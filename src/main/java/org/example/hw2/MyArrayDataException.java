@@ -1,6 +1,7 @@
 package org.example.hw2;
 
 public class MyArrayDataException extends ClassCastException {
+
     private final int row;
     private final int column;
 

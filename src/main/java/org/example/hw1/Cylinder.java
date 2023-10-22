@@ -1,6 +1,7 @@
 package org.example.hw1;
 
 public class Cylinder extends SolidOfRevolution {
+
     private final double height;
 
     public Cylinder(final double radius, final double height) {

@@ -1,6 +1,7 @@
 package org.example.hw4_1;
 
 public interface MyList<E> {
+
     int size();
 
     boolean isEmpty();

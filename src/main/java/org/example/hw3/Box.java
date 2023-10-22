@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class Box<T extends Fruit> {
+
     private final List<T> boxFruit = new ArrayList<>();
 
     public void add(final T fruit) {

@@ -2,6 +2,7 @@ package org.example.hw4_1;
 
 // todo: implement
 public class MyLinkedList<E> implements MyList<E> {
+
     @Override
     public int size() {
         return 0;
@@ -13,17 +14,17 @@ public class MyLinkedList<E> implements MyList<E> {
     }
 
     @Override
-    public boolean contains(Object o) {
+    public boolean contains(final Object o) {
         return false;
     }
 
     @Override
-    public boolean add(E e) {
+    public boolean add(final E e) {
         return false;
     }
 
     @Override
-    public boolean remove(Object o) {
+    public boolean remove(final Object o) {
         return false;
     }
 
@@ -33,7 +34,7 @@ public class MyLinkedList<E> implements MyList<E> {
     }
 
     @Override
-    public E get(int index) {
+    public E get(final int index) {
         return null;
     }
 }

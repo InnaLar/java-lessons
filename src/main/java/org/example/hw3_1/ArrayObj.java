@@ -1,7 +1,5 @@
 package org.example.hw3_1;
 
-import java.util.ArrayList;
-
 public class ArrayObj {
 
     public static <T> void swap(final T[] elements, final int i, final int j) {
