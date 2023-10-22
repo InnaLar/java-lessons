@@ -3,7 +3,7 @@ package org.example.hw4_1;
 // todo: implement
 public class MyArrayList<E> implements MyList<E> {
 
-    final int CAPACITY = 10;
+    private static final int CAPACITY = 10;
     private int size;
     private Object[] elementData;
 
@@ -71,12 +71,10 @@ public class MyArrayList<E> implements MyList<E> {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public E get(final int index) {
         if (elementData[index] != null) {
             Object elem = elementData[index];
-            if (!(elem instanceof E)) {
-                return null;
-            }
             return (E) elem;
         }
         return null;
