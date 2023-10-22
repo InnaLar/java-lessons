@@ -3,6 +3,7 @@ package org.example.hw4_1;
 // todo: implement
 public class MyArrayList<E> implements MyList<E> {
 
+    // todo  static final
     final int CAPACITY = 10;
     private int size;
     private Object[] elementData;
@@ -22,8 +23,7 @@ public class MyArrayList<E> implements MyList<E> {
         if (o == null) {
             return false;
         }
-        for (Object elem : elementData
-        ) {
+        for (Object elem : elementData) {
             if (elem.equals(o)) {
                 return true;
             }
@@ -34,6 +34,7 @@ public class MyArrayList<E> implements MyList<E> {
     @Override
     public boolean add(final E e) {
         if (size == CAPACITY) {
+            // todo: CAPACITY -> DEFAULT_CAPACITY and 1.5 * size
             Object[] arrToExpend = new Object[(int) (1.5 * CAPACITY)];
             System.arraycopy(elementData, 0, arrToExpend, 0, size);
             arrToExpend[size] = e;
@@ -48,9 +49,9 @@ public class MyArrayList<E> implements MyList<E> {
     @Override
     public boolean remove(final Object o) {
         int counter = 0;
-        for (Object elem : elementData
-        ) {
+        for (Object elem : elementData) {
             if (elem.equals(o)) {
+                // todo: System.arraycopy(elementData, 0, arrToExpend, 0, size);
                 for (int i = counter; i < size - 1; i++) {
                     elementData[i] = elementData[i + 1];
                 }
@@ -65,19 +66,13 @@ public class MyArrayList<E> implements MyList<E> {
 
     @Override
     public void clear() {
-        for (int i = 0; i < size; i++) {
-            elementData[i] = null;
-        }
+        // todo: Arrays.fill(myArray, null);
     }
 
     @Override
     public E get(final int index) {
         if (elementData[index] != null) {
-            Object elem = elementData[index];
-            if (!(elem instanceof E)) {
-                return null;
-            }
-            return (E) elem;
+            return (E) elementData[index];
         }
         return null;
     }

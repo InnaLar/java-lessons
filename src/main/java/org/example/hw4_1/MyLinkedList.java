@@ -3,6 +3,8 @@ package org.example.hw4_1;
 // todo: implement
 public class MyLinkedList<E> implements MyList<E> {
 
+    Node<E> first;
+
     @Override
     public int size() {
         return 0;
@@ -30,11 +32,22 @@ public class MyLinkedList<E> implements MyList<E> {
 
     @Override
     public void clear() {
-
+        // TODO document why this method is empty
     }
 
     @Override
     public E get(final int index) {
         return null;
+    }
+
+    private static class Node<E> {
+
+        E item;
+        Node<E> next;
+
+        Node(E element, Node<E> next) {
+            this.item = element;
+            this.next = next;
+        }
     }
 }
