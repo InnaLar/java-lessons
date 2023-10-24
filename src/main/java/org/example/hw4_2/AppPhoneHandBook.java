@@ -7,9 +7,8 @@ public class AppPhoneHandBook {
         phBook.add("Ларина", "89022672754");
         phBook.add("Ларина", "89089127447");
         phBook.add("Мусина", "81234567890");
-        for (String phone : phBook.get("Ларина")
-        ) {
-            System.out.println(phone);
-        }
+//        for (String phone : phBook.get("Ларина")) {
+//            System.out.println(phone);
+//        }
     }
 }
