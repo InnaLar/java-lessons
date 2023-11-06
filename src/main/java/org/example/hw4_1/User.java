@@ -35,4 +35,8 @@ class User {
     public int hashCode() {
         return Objects.hash(getId());
     }
+
+    public int getId() {
+        return id;
+    }
 }

@@ -6,13 +6,14 @@ public class Algorithms {
     public int[] findTwoMax(final int[] arr) {
         int max1 = Integer.MIN_VALUE;
         int max2 = Integer.MIN_VALUE;
-        for (int i = 0; i < arr.length; i++) {
-           int min = Math.min(max1, max2);
-            if (arr[i] > min) {
+        for (int elem: arr
+             ) {
+            int min = Math.min(max1, max2);
+            if (elem > min) {
                 if (min == max1) {
-                    max1 = arr[i];
+                    max1 = elem;
                 } else {
-                    max2 = arr[i];
+                    max2 = elem;
                 }
             }
         }

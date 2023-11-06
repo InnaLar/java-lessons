@@ -1,7 +1,7 @@
 package org.example.hw4_1;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class SetExample {
 
@@ -11,13 +11,17 @@ public class SetExample {
                 .name("1")
                 .age(23)
                 .build();
-        Map<User, String> hashMap = new HashMap<>();
+
+        Map<User, String> hashMap = new ConcurrentHashMap<>();
 
         hashMap.put(user, "hello world");
 
         user.age = 21;
 
-        System.out.println(hashMap.get(user));
+        String word = hashMap.getOrDefault(user, "не нашел такого пользователя");
+
+        hashMap.put(user, word);
+
     }
 }
 

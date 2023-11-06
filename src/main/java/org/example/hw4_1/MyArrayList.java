@@ -1,22 +1,28 @@
 package org.example.hw4_1;
 
-// todo: implement
+import java.util.Arrays;
+
 public class MyArrayList<E> implements MyList<E> {
 
-    private static final int CAPACITY = 10;
-    // todo  static final
-
-    private int size;
+    private static final int DEFAULT_CAPACITY = 10;
+    private int arrSize;
+    private int capacity;
     private Object[] elementData;
+
+    public MyArrayList() {
+        arrSize = 0;
+        capacity = DEFAULT_CAPACITY;
+        elementData = new Object[capacity];
+    }
 
     @Override
     public int size() {
-        return size;
+        return arrSize;
     }
 
     @Override
     public boolean isEmpty() {
-        return size == 0;
+        return arrSize == 0;
     }
 
     @Override
@@ -34,40 +40,35 @@ public class MyArrayList<E> implements MyList<E> {
 
     @Override
     public boolean add(final E e) {
-        if (size == CAPACITY) {
-            // todo: CAPACITY -> DEFAULT_CAPACITY and 1.5 * size
-            Object[] arrToExpend = new Object[(int) (1.5 * CAPACITY)];
-            System.arraycopy(elementData, 0, arrToExpend, 0, size);
-            arrToExpend[size] = e;
+        if (arrSize == capacity) {
+            capacity = (int) (1.5 * capacity);
+            Object[] arrToExpend = new Object[capacity];
+            System.arraycopy(elementData, 0, arrToExpend, 0, arrSize);
+            arrToExpend[arrSize] = e;
             elementData = arrToExpend;
         } else {
-            elementData[size] = e;
+            elementData[arrSize] = e;
         }
-        size++;
+        arrSize++;
         return true;
     }
 
     @Override
     public boolean remove(final Object o) {
-        int counter = 0;
-        for (Object elem : elementData) {
-            if (elem.equals(o)) {
-                // todo: System.arraycopy(elementData, 0, arrToExpend, 0, size);
-                for (int i = counter; i < size - 1; i++) {
-                    elementData[i] = elementData[i + 1];
+        for (int i = 0; i < elementData.length; i++) {
+                if (elementData[i].equals(o)) {
+                    System.arraycopy(elementData, i + 1, elementData, i, elementData.length - i - 1);
+                    Arrays.fill((Object[]) elementData[arrSize - 1], null);
+                    arrSize--;
+                    return true;
                 }
-                elementData[size - 1] = null;
-                size--;
-                return true;
             }
-            counter++;
-        }
         return false;
-    }
+        }
 
     @Override
     public void clear() {
-        // todo: Arrays.fill(myArray, null);
+        Arrays.fill(elementData, null);
     }
 
     @Override
@@ -80,4 +81,16 @@ public class MyArrayList<E> implements MyList<E> {
         }
         return null;
     }
+
+    /*@Override
+    public String toString() {
+        StringBuilder result = new StringBuilder();
+        for (Object o:elementData
+             ) {
+            if (o instanceof String) {
+            result.append(o.toString()).append(" ");
+            }
+        }
+        return result.toString();
+    }*/
 }

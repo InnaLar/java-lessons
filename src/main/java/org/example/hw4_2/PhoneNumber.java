@@ -5,7 +5,16 @@ import lombok.Data;
 
 @Data
 @Builder
-// todo: Comparable
-public class PhoneNumber {
+public class PhoneNumber implements Comparable<PhoneNumber> {
     private String phone;
+
+    public String getPhone() {
+        return phone;
+    }
+
+    @Override
+    public int compareTo(final PhoneNumber o) {
+        return this.phone.compareTo(o.phone);
+    }
+
 }
