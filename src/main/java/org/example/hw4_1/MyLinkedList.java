@@ -1,5 +1,6 @@
 package org.example.hw4_1;
 
+@SuppressWarnings("PMD.NullAssignment")
 public class MyLinkedList<E> implements MyList<E> {
 
     private Node<E> first;
@@ -38,11 +39,10 @@ public class MyLinkedList<E> implements MyList<E> {
         return false;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public boolean add(final E e) {
         if (first == null) {
-            first = (Node<E>) new Node<Object>(e, null);
+            first = new Node<>(e, null);
             return true;
         }
         Node<E> next = first;
@@ -60,9 +60,9 @@ public class MyLinkedList<E> implements MyList<E> {
         while (next != null) {
             if (next.item.equals(o)) {
                 if (previous.equals(first)) {
-                   first = first.next;
-                   } else {
-                     previous.next = next.next;
+                    first = first.next;
+                } else {
+                    previous.next = next.next;
                 }
                 return true;
             }
@@ -93,19 +93,6 @@ public class MyLinkedList<E> implements MyList<E> {
         }
         return null;
     }
-
-    /*@Override
-    public String toString() {
-        StringBuilder result = new StringBuilder();
-        Node<E> next = first;
-        while (next != null) {
-            if (next.item instanceof String) {
-                result.append(next.item.toString()).append(" ");
-            }
-            next = next.next;
-        }
-        return result.toString();
-    }*/
 
     private static class Node<E> {
 

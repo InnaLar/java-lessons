@@ -56,15 +56,15 @@ public class MyArrayList<E> implements MyList<E> {
     @Override
     public boolean remove(final Object o) {
         for (int i = 0; i < elementData.length; i++) {
-                if (elementData[i].equals(o)) {
-                    System.arraycopy(elementData, i + 1, elementData, i, elementData.length - i - 1);
-                    Arrays.fill((Object[]) elementData[arrSize - 1], null);
-                    arrSize--;
-                    return true;
-                }
+            if (elementData[i].equals(o)) {
+                System.arraycopy(elementData, i + 1, elementData, i, elementData.length - i - 1);
+                Arrays.fill((Object[]) elementData[arrSize - 1], null);
+                arrSize--;
+                return true;
             }
-        return false;
         }
+        return false;
+    }
 
     @Override
     public void clear() {
@@ -82,15 +82,4 @@ public class MyArrayList<E> implements MyList<E> {
         return null;
     }
 
-    /*@Override
-    public String toString() {
-        StringBuilder result = new StringBuilder();
-        for (Object o:elementData
-             ) {
-            if (o instanceof String) {
-            result.append(o.toString()).append(" ");
-            }
-        }
-        return result.toString();
-    }*/
 }
