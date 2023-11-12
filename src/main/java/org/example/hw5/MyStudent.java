@@ -1,31 +1,17 @@
 package org.example.hw5;
 
+import lombok.Builder;
+import lombok.Getter;
+import lombok.ToString;
+
 import java.util.List;
 
+@Builder
+@Getter
+@ToString
 public class MyStudent implements Student {
+
     private String name;
-    private List<Course> courses;
+    private List<Course> allCourses;
 
-    public MyStudent(final String name, final List<Course> courses) {
-        this.name = name;
-        this.courses = courses;
-    }
-
-    public void setName(final String name) {
-        this.name = name;
-    }
-
-    public void setCourses(final List<Course> courses) {
-        this.courses = courses;
-    }
-
-    @Override
-    public List<Course> getAllCourses() {
-        return courses;
-    }
-
-    @Override
-    public String getName() {
-        return name;
-    }
 }

@@ -1,4 +1,4 @@
-package org.example.hw6;
+package org.example.hw6.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,7 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class User {
-    private int id;
+    private Long id;
     private String lastName;
     private String phoneNumber;
 }
