@@ -13,6 +13,6 @@ public class UserMapper {
     }
 
     public String toCsvRow(final User user) {
-        return String.format("%s; %s; %s", user.getId(), user.getLastName(), user.getPhoneNumber());
+        return String.format("%s;%s;%s", user.getId(), user.getLastName(), user.getPhoneNumber());
     }
 }

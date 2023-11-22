@@ -4,7 +4,7 @@ import java.util.List;
 
 public class App {
 
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         MyStudent myStudent1 = MyStudent.builder()
             .name("1")
             .allCourses(List.of(
