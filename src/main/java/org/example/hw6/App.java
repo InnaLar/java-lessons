@@ -1,57 +1,46 @@
 package org.example.hw6;
 
 import org.example.hw6.dao.UserFileDao;
+import org.example.hw6.dto.SaveUserRequest;
+import org.example.hw6.dto.UpdateUserRequest;
 import org.example.hw6.mapper.UserMapper;
-import org.example.hw6.model.User;
+import org.example.hw6.service.UserService;
 
 import java.nio.file.Path;
-import java.util.List;
-import java.util.Optional;
+import java.util.Random;
 
 public class App {
-    private static List<User> users;
+    private static final Random RANDOM = new Random();
 
     public static void main(final String[] args) {
-        UserMapper userMapper = new UserMapper();
-        UserFileDao userFileDao = new UserFileDao(userMapper, Path.of("user.csv"));
+        final UserService userService = createDependencies();
 
-        users = userFileDao.findAll();
-        printListUser();
-
-        Optional<User> optionalUser = userFileDao.findById(1L);
-        if (optionalUser.isPresent()) {
-            User user = optionalUser.get();
-            System.out.println(user.getLastName());
+        for (int i = 0; i < 1000; i++) {
+            userService.save(createSaveUserRequest());
         }
 
-        User dozorova = User.builder()
-            .id(5L)
-            .lastName("Semenova")
-            .phoneNumber("99999999")
-            .build();
-
-        userFileDao.save(dozorova);
-        users = userFileDao.findAll();
-        printListUser();
-
-        userFileDao.deleteById(3L);
-        userFileDao.deleteById(4L);
-
-        User larin = User.builder()
-            .id(1L)
-            .lastName("Larin")
-            .phoneNumber("89221741278")
-            .build();
-
-        userFileDao.update(larin);
-        users = userFileDao.findAll();
-        printListUser();
+        System.out.println(userService.findAll());
     }
 
-    public static void printListUser() {
-        System.out.println("Cписок пользователей");
-        users.forEach(u -> System.out.println(u.getLastName()));
-        System.out.println("Конец списка пользователей");
+    private static UpdateUserRequest createUpdateUserRequest() {
+        return UpdateUserRequest.builder()
+            .lastName("newLastName")
+            .phoneNumber("newPhoneNumber")
+            .build();
+    }
+
+    private static SaveUserRequest createSaveUserRequest() {
+        return SaveUserRequest.builder()
+            .phoneNumber("1234567890")
+            .password(RANDOM.longs().toString())
+            .build();
+    }
+
+    private static UserService createDependencies() {
+        final UserMapper userMapper = new UserMapper();
+        final Path path = Path.of("user.csv");
+        final UserFileDao userFileDao = new UserFileDao(userMapper, path);
+        return new UserService(userFileDao, userMapper);
     }
 
 }
