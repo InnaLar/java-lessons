@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
+@SuppressWarnings("PMD.UseConcurrentHashMap")
 public class AppStudents {
 
     public static Predicate<Course> distinctByKey(final Function<Course, Object> keyExtractor) {

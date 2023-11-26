@@ -2,17 +2,14 @@ package org.example.hw6;
 
 import org.example.hw6.dao.AccountDao;
 import org.example.hw6.dao.UserFileDao;
-import org.example.hw6.dto.SaveUserRequest;
 import org.example.hw6.dto.UpdateUserRequest;
 import org.example.hw6.mapper.AccountMapper;
 import org.example.hw6.mapper.UserMapper;
 import org.example.hw6.service.UserService;
 
 import java.nio.file.Path;
-import java.util.Random;
 
 public class AppUser {
-    private static final Random RANDOM = new Random();
 
     public static void main(final String[] args) {
         final UserService userService = createDependencies();
@@ -20,19 +17,12 @@ public class AppUser {
         userService.update(10L, createUpdateUserRequest());
         userService.findAll().forEach(System.out::println);
         userService.deleteById(10L);
-}
+    }
 
     private static UpdateUserRequest createUpdateUserRequest() {
         return UpdateUserRequest.builder()
             .lastName("zorin")
             .phoneNumber("8888888")
-            .build();
-    }
-
-    private static SaveUserRequest createSaveUserRequest() {
-        return SaveUserRequest.builder()
-            .phoneNumber("1234567890")
-            .password(RANDOM.longs().toString())
             .build();
     }
 

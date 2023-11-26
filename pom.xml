@@ -22,6 +22,7 @@
         <junit-jupiter.version>5.10.0</junit-jupiter.version>
         <junit-jupiter.version>5.10.0</junit-jupiter.version>
         <lombok.version>1.18.30</lombok.version>
+        <spring-boot-starter-webflux.version>3.1.4</spring-boot-starter-webflux.version>
     </properties>
 
     <dependencyManagement>
@@ -38,6 +39,11 @@
                 <version>${junit-jupiter.version}</version>
                 <scope>test</scope>
             </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-webflux</artifactId>
+                <version>${spring-boot-starter-webflux.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -50,6 +56,21 @@
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webflux</artifactId>
+        </dependency>
     </dependencies>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.github.spotbugs</groupId>
+                <artifactId>spotbugs-maven-plugin</artifactId>
+                <configuration>
+                    <excludeFilterFile>spotbugs-exclude.xml</excludeFilterFile>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>

@@ -10,6 +10,7 @@ import org.example.hw6.service.AccountService;
 
 import java.nio.file.Path;
 
+@SuppressWarnings("PMD.SystemPrintln")
 public class AppAccount {
     public static void main(final String[] args) {
         AccountService accountService = createDependencies();
@@ -38,6 +39,6 @@ public class AppAccount {
         UserFileDao userFileDao = new UserFileDao(userMapper, pathUser);
 
         return new AccountService(accountDao, userFileDao, accountMapper);
-     }
+    }
 
 }

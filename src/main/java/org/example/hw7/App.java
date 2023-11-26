@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+@SuppressWarnings("PMD.SystemPrintln")
 public class App {
     public static void main(final String[] args) {
         Stream<Integer> streamInt = Stream.of(1, 2, 3, 4);

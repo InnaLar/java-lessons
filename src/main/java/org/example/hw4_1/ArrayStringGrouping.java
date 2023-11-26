@@ -3,7 +3,7 @@ package org.example.hw4_1;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-@SuppressWarnings({"PMD.SystemPrintln", "PMD.AvoidDuplicateLiterals"})
+@SuppressWarnings({"PMD.SystemPrintln", "PMD.AvoidDuplicateLiterals", "SystemPrintln"})
 public class ArrayStringGrouping {
 
     public static void main(final String[] args) {

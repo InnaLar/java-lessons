@@ -2,6 +2,7 @@ package org.example.hw5;
 
 import java.util.List;
 
+@SuppressWarnings({"PMD.SystemPrintln", "PMD.UseConcurrentHashMap"})
 public class App {
 
     public static void main(final String[] args) {
