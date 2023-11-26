@@ -1,31 +1,31 @@
 package org.example.hw6;
 
+import org.example.hw6.dao.AccountDao;
 import org.example.hw6.dao.UserFileDao;
 import org.example.hw6.dto.SaveUserRequest;
 import org.example.hw6.dto.UpdateUserRequest;
+import org.example.hw6.mapper.AccountMapper;
 import org.example.hw6.mapper.UserMapper;
 import org.example.hw6.service.UserService;
 
 import java.nio.file.Path;
 import java.util.Random;
 
-public class App {
+public class AppUser {
     private static final Random RANDOM = new Random();
 
     public static void main(final String[] args) {
         final UserService userService = createDependencies();
 
-        for (int i = 0; i < 1000; i++) {
-            userService.save(createSaveUserRequest());
-        }
-
-        System.out.println(userService.findAll());
-    }
+        userService.update(10L, createUpdateUserRequest());
+        userService.findAll().forEach(System.out::println);
+        userService.deleteById(10L);
+}
 
     private static UpdateUserRequest createUpdateUserRequest() {
         return UpdateUserRequest.builder()
-            .lastName("newLastName")
-            .phoneNumber("newPhoneNumber")
+            .lastName("zorin")
+            .phoneNumber("8888888")
             .build();
     }
 
@@ -38,9 +38,13 @@ public class App {
 
     private static UserService createDependencies() {
         final UserMapper userMapper = new UserMapper();
-        final Path path = Path.of("user.csv");
-        final UserFileDao userFileDao = new UserFileDao(userMapper, path);
-        return new UserService(userFileDao, userMapper);
+        final Path pathUser = Path.of("user.csv");
+        final UserFileDao userFileDao = new UserFileDao(userMapper, pathUser);
+        final AccountMapper accountMapper = new AccountMapper();
+        final Path pathAccount = Path.of("account.csv");
+        final AccountDao accountDao = new AccountDao(accountMapper, pathAccount);
+
+        return new UserService(userFileDao, accountDao, userMapper);
     }
 
 }

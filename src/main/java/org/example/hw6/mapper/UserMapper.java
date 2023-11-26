@@ -27,7 +27,7 @@ public class UserMapper {
         user.setPhoneNumber(request.getPhoneNumber());
     }
 
-    public User toUser(SaveUserRequest request) {
+    public User toUser(final SaveUserRequest request) {
         return User.builder()
             .id(random.nextLong(1000))
             .phoneNumber(request.getPhoneNumber())

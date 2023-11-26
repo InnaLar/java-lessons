@@ -46,7 +46,7 @@ public class UserFileDao implements CrudRepository<User, Long> {
     @Override
     public User save(final User user) {
         try {
-            Files.writeString(path, userMapper.toCsvRow(user) + System.lineSeparator(),
+            Files.writeString(path, System.lineSeparator() + userMapper.toCsvRow(user),
                 StandardOpenOption.CREATE, StandardOpenOption.WRITE, StandardOpenOption.APPEND);
             return user;
         } catch (IOException e) {

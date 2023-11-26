@@ -20,7 +20,7 @@ public class BaseEntity {
     private Long id;
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }
@@ -35,4 +35,5 @@ public class BaseEntity {
     public int hashCode() {
         return Objects.hash(id);
     }
+
 }
