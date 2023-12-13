@@ -1,4 +1,4 @@
-package org.example.http.model.api.barbecueWeather;
+package org.example.http.model.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 @NoArgsConstructor
-
 public class OutdoorConditions {
     private String name;
     private int value;

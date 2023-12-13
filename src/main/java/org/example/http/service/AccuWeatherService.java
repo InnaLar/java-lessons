@@ -36,9 +36,7 @@ public class AccuWeatherService {
             System.out.println(topcity.getKey() + ", id " + topcity.getEnglishName());
         }
 
-        try {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
             System.out.println("Введите номер города.");
 
             String indexCity = reader.readLine();
@@ -63,11 +61,9 @@ public class AccuWeatherService {
             OutdoorRoot[] barbecueConditions =
                 accuweatherClient.getOutdoorRoot(topcitiesRoot.getKey());
 
-            //Arrays.stream(barbecueConditions).forEach(System.out::println);
             Arrays.stream(barbecueConditions)
                 .map(barbecueConditionsMapper::toOutdoorConditions)
                 .forEach(System.out::println);
-
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

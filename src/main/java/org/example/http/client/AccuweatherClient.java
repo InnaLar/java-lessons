@@ -9,13 +9,15 @@ import org.springframework.web.reactive.function.client.WebClient;
 @RequiredArgsConstructor
 public class AccuweatherClient {
     private final WebClient webClient;
-    private final int barbecueGroupId = 6;
+    private static final int BARBECUE_GROUP_ID = 6;
+    private static final String APIKEY = "apikey";
+    private static final String API_KEY_VALUE = "dyKHmZXCEt9IF3mdJIjDuxZtpArMOLVv";
 
     public TopcitiesRoot[] getTopcitiesRoot() {
         return webClient.get()
             .uri(uriBuilder -> uriBuilder
                 .pathSegment("locations", "v1", "topcities", "{count}")
-                .queryParam("apikey", /*"kRK8UAPHaOphrB82Ida62hMIdFnt36yB"*/"dyKHmZXCEt9IF3mdJIjDuxZtpArMOLVv")
+                .queryParam(APIKEY, API_KEY_VALUE)
                 .build(150))
             .retrieve()
             .bodyToMono(TopcitiesRoot[].class)
@@ -26,7 +28,7 @@ public class AccuweatherClient {
         return webClient.get()
             .uri(uriBuilder -> uriBuilder
                 .pathSegment("currentconditions", "v1", "{locationKey}")
-                .queryParam("apikey", "dyKHmZXCEt9IF3mdJIjDuxZtpArMOLVv")
+                .queryParam(APIKEY, API_KEY_VALUE)
                 .build(id))
             .retrieve()
             .bodyToMono(CurrentConditionsRoot[].class)
@@ -37,9 +39,9 @@ public class AccuweatherClient {
         return webClient.get()
             .uri(uriBuilder -> uriBuilder
                 .pathSegment("indices", "v1", "daily", "1day", "{locationKey}", "groups", "{ID}")
-                .queryParam("apikey", "dyKHmZXCEt9IF3mdJIjDuxZtpArMOLVv")
-                .build(id, barbecueGroupId)
-                )
+                .queryParam(APIKEY, API_KEY_VALUE)
+                .build(id, BARBECUE_GROUP_ID)
+            )
             .retrieve()
             .bodyToMono(OutdoorRoot[].class)
             .block();
