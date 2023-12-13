@@ -1,14 +1,14 @@
-package org.example.http;
+package org.example.http.model.api.currentconditions;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@AllArgsConstructor
+@Data
 @Builder
-@Getter
-@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 
 public class CityCurrentWeather {
     private String country;
