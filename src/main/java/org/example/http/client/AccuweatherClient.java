@@ -9,9 +9,9 @@ import org.springframework.web.reactive.function.client.WebClient;
 @RequiredArgsConstructor
 public class AccuweatherClient {
     private final WebClient webClient;
-    private static final int BARBECUE_GROUP_ID = 6;
     private static final String APIKEY = "apikey";
     private static final String API_KEY_VALUE = "dyKHmZXCEt9IF3mdJIjDuxZtpArMOLVv";
+    private static final int BARBECUE_GROUP_ID = 6;
 
     public TopcitiesRoot[] getTopcitiesRoot() {
         return webClient.get()

@@ -17,7 +17,7 @@ public class PostgreSqlHelper {
             if (connection == null) {
                 Properties properties = getCredentials();
 
-                Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5433/files", properties);
+                Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5433/storage", properties);
                 conn.setAutoCommit(false);
                 connection = conn;
             }
@@ -40,8 +40,18 @@ public class PostgreSqlHelper {
     public static void doMigrate() {
         Connection connection = PostgreSqlHelper.getConnection();
 
-        try (final Statement statement = connection.createStatement()) {
-            final String createFilesTableSql = """
+        try (Statement statement = connection.createStatement()) {
+            String createFilesTableSql = """
+                create table if not exists extension_refl
+                (
+                    id BIGSERIAL,
+                    name varchar(10) not null,
+                    constraint extension_pkey_id primary key (id)
+                );
+                """;
+            statement.execute(createFilesTableSql);
+
+            createFilesTableSql = """
                 create table if not exists files
                 (
                 	id BIGSERIAL,
@@ -49,10 +59,13 @@ public class PostgreSqlHelper {
                 	type varchar(50),
                 	url varchar(255) not null,
                 	extension varchar(10),
-                	constraint files_pkey_id primary key (id)
+                	constraint files_pkey_id primary key (id),
+                	constraint fk_extension FOREIGN KEY (extension)
+                      REFERENCES extension_refl
                 );
                 """;
             statement.execute(createFilesTableSql);
+
         } catch (SQLException e) {
             throw new IllegalStateException(e);
         }

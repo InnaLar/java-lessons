@@ -13,10 +13,10 @@ public class File {
     private String name;
     private Type type;
     private String url;
-    private String extension;
+    private Long extension;
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }

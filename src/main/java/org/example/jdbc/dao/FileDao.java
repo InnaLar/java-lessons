@@ -22,7 +22,7 @@ public class FileDao implements CrudRepository<File, Long> {
             .name(resultSet.getString("name"))
             .type(Type.valueOf(resultSet.getString("type")))
             .url(resultSet.getString("url"))
-            .extension(resultSet.getString("extension"))
+            .extension(resultSet.getLong("extension"))
             .build();
     }
 
@@ -44,27 +44,63 @@ public class FileDao implements CrudRepository<File, Long> {
     }
 
     @Override
-    public Optional<File> findById(Long id) {
-        return Optional.empty();
+    public Optional<File> findById(final Long id) {
+        Connection connection = PostgreSqlHelper.getConnection();
+        try (Statement statement = connection.createStatement()) {
+            ResultSet resultSet = statement.executeQuery(SqlConstants.getStringSelectFileById(id));
+            /*return Optional.ofNullable(buildFile(resultSet));*/
+            File file = null;
+            while (resultSet.next()) {
+                file = buildFile(resultSet);
+            }
+            return Optional.ofNullable(file);
+        } catch (SQLException e) {
+            throw new IllegalStateException(e);
+        }
     }
 
     @Override
-    public File save(File user) {
-        //            String insertIntoFilesSql = """
-//                insert into files (name, type, url, extension)
-//                values ('example_file_name10.txt', 'personal', 'local/files/example_file_name10.txt', 'txt');
-//                """;
-//            statement.execute(insertIntoFilesSql);
-        return null;
+    public File save(final File user) {
+        Connection connection = PostgreSqlHelper.getConnection();
+        try (Statement statement = connection.createStatement()) {
+            if (statement.execute(SqlConstants.getStringInsertFileWithValues(user.getName(),
+                user.getType(),
+                user.getUrl(),
+                user.getExtension()))) {
+                return user; }
+            else {
+                return null; }
+        } catch (SQLException e) {
+            throw new IllegalStateException(e);
+        }
+
     }
 
     @Override
-    public void deleteById(Long id) {
-
+    public void deleteById(final Long id) {
+        Connection connection = PostgreSqlHelper.getConnection();
+        try (Statement statement = connection.createStatement()) {
+            statement.execute(SqlConstants.getStringDeleteFileById(id));
+            return;
+        } catch (SQLException e) {
+            throw new IllegalStateException(e);
+        }
     }
 
     @Override
-    public File update(File user) {
-        return null;
+    public File update(final File user) {
+        Connection connection = PostgreSqlHelper.getConnection();
+        try (Statement statement = connection.createStatement()) {
+            if (statement.execute(SqlConstants.getStringUpdateFileByIdWithValues(user.getId(),
+                user.getName(),
+                user.getType(),
+                user.getUrl(),
+                user.getExtension()))) {
+            return user; }
+            else { return null;
+            }
+        } catch (SQLException e) {
+            throw new IllegalStateException(e);
+        }
     }
 }
