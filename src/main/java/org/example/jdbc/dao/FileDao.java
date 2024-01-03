@@ -7,6 +7,7 @@ import org.example.jdbc.model.entity.File;
 import org.example.jdbc.util.PostgreSqlHelper;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -22,7 +23,7 @@ public class FileDao implements CrudRepository<File, Long> {
             .name(resultSet.getString("name"))
             .type(Type.valueOf(resultSet.getString("type")))
             .url(resultSet.getString("url"))
-            .extension(resultSet.getLong("extension"))
+            .extensionId(resultSet.getLong("extension"))
             .build();
     }
 
@@ -48,12 +49,8 @@ public class FileDao implements CrudRepository<File, Long> {
         Connection connection = PostgreSqlHelper.getConnection();
         try (Statement statement = connection.createStatement()) {
             ResultSet resultSet = statement.executeQuery(SqlConstants.getStringSelectFileById(id));
-            /*return Optional.ofNullable(buildFile(resultSet));*/
-            File file = null;
-            while (resultSet.next()) {
-                file = buildFile(resultSet);
-            }
-            return Optional.ofNullable(file);
+            resultSet.next();
+            return Optional.ofNullable(buildFile(resultSet));
         } catch (SQLException e) {
             throw new IllegalStateException(e);
         }
@@ -62,18 +59,24 @@ public class FileDao implements CrudRepository<File, Long> {
     @Override
     public File save(final File user) {
         Connection connection = PostgreSqlHelper.getConnection();
-        try (Statement statement = connection.createStatement()) {
-            if (statement.execute(SqlConstants.getStringInsertFileWithValues(user.getName(),
-                user.getType(),
-                user.getUrl(),
-                user.getExtension()))) {
-                return user; }
-            else {
-                return null; }
+        try (PreparedStatement statement =
+                 connection.prepareStatement(SqlConstants.INSERT_INTO_FILES_NAME_TYPE_URL_EXTENSION_VALUES_S_S_S_D,
+                     Statement.RETURN_GENERATED_KEYS)) {
+            statement.setString(1, user.getName());
+            statement.setString(2, user.getType().name());
+            statement.setString(3, user.getUrl());
+            statement.setLong(4, user.getExtensionId());
+            statement.executeUpdate();
+            connection.commit();
+
+            try (ResultSet keys = statement.getGeneratedKeys()) {
+                keys.next();
+                user.setId(keys.getLong(1));
+                return user;
+            }
         } catch (SQLException e) {
             throw new IllegalStateException(e);
         }
-
     }
 
     @Override
@@ -81,7 +84,6 @@ public class FileDao implements CrudRepository<File, Long> {
         Connection connection = PostgreSqlHelper.getConnection();
         try (Statement statement = connection.createStatement()) {
             statement.execute(SqlConstants.getStringDeleteFileById(id));
-            return;
         } catch (SQLException e) {
             throw new IllegalStateException(e);
         }
@@ -95,9 +97,10 @@ public class FileDao implements CrudRepository<File, Long> {
                 user.getName(),
                 user.getType(),
                 user.getUrl(),
-                user.getExtension()))) {
-            return user; }
-            else { return null;
+                user.getExtensionId()))) {
+                return user;
+            } else {
+                return null;
             }
         } catch (SQLException e) {
             throw new IllegalStateException(e);

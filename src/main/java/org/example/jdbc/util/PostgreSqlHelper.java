@@ -39,12 +39,11 @@ public class PostgreSqlHelper {
 
     public static void doMigrate() {
         Connection connection = PostgreSqlHelper.getConnection();
-
         try (Statement statement = connection.createStatement()) {
             String createFilesTableSql = """
                 create table if not exists extension_refl
                 (
-                    id BIGSERIAL,
+                    id bigserial,
                     name varchar(10) not null,
                     constraint extension_pkey_id primary key (id)
                 );
@@ -54,18 +53,17 @@ public class PostgreSqlHelper {
             createFilesTableSql = """
                 create table if not exists files
                 (
-                	id BIGSERIAL,
+                	id bigserial,
                 	name varchar(100) not null,
                 	type varchar(50),
                 	url varchar(255) not null,
-                	extension varchar(10),
+                	extension_id bigint not null,
                 	constraint files_pkey_id primary key (id),
-                	constraint fk_extension FOREIGN KEY (extension)
-                      REFERENCES extension_refl
+                	constraint files_fkey_extension_id foreign key (extension_id) references extension_refl(id)
                 );
                 """;
             statement.execute(createFilesTableSql);
-
+            connection.commit();
         } catch (SQLException e) {
             throw new IllegalStateException(e);
         }

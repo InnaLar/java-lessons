@@ -13,7 +13,7 @@ public class File {
     private String name;
     private Type type;
     private String url;
-    private Long extension;
+    private Long extensionId;
 
     @Override
     public boolean equals(final Object o) {

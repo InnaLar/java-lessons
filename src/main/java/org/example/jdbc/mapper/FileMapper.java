@@ -13,29 +13,23 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class FileMapper {
     private final ExtensionDao extensionDao;
-    public FileRs toFileRs(final File file) {
-        Optional<Extension> extension = extensionDao.findById(file.getExtension());
+
+    public FileRs toFileRs(final File file, final Extension extension) {
         return FileRs.builder()
             .uniqueId(file.getId())
             .fileName(file.getName())
             .type(file.getType().name())
             .url(file.getUrl())
-            .ext(String.valueOf(extension))
+            .ext(extension.getName())
             .build();
     }
 
-    public File toFile(final FileRsIns request) {
-        Optional<Extension> extensionFound = extensionDao.findAll()
-            .stream()
-            .filter(extension -> extension.getName().equals(request.getExt()))
-            .findFirst();
-        Long idExtension = extensionFound.map(Extension::getId).orElse(null);
+    public File toFile(final FileRsIns request, final Extension extension) {
         return File.builder()
-            .id(0L)
             .name(request.getFileName())
             .type(Type.valueOf(request.getType()))
             .url(request.getUrl())
-            .extension(idExtension)
+            .extensionId(extension.getId())
             .build();
     }
 
@@ -50,7 +44,7 @@ public class FileMapper {
             .name(request.getFileName())
             .type(Type.valueOf(request.getType()))
             .url(request.getUrl())
-            .extension(idExtension)
+            .extensionId(idExtension)
             .build();
     }
 }
