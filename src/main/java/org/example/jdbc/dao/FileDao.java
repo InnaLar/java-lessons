@@ -47,10 +47,14 @@ public class FileDao implements CrudRepository<File, Long> {
     @Override
     public Optional<File> findById(final Long id) {
         Connection connection = PostgreSqlHelper.getConnection();
-        try (Statement statement = connection.createStatement()) {
-            ResultSet resultSet = statement.executeQuery(SqlConstants.getStringSelectFileById(id));
-            resultSet.next();
-            return Optional.ofNullable(buildFile(resultSet));
+        try (PreparedStatement statement =
+                 connection.prepareStatement(SqlConstants.SELECT_FROM_FILES_WHERE_ID)) {
+            statement.setLong(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return Optional.ofNullable(buildFile(resultSet));
+            }
+            return Optional.empty();
         } catch (SQLException e) {
             throw new IllegalStateException(e);
         }
@@ -82,8 +86,10 @@ public class FileDao implements CrudRepository<File, Long> {
     @Override
     public void deleteById(final Long id) {
         Connection connection = PostgreSqlHelper.getConnection();
-        try (Statement statement = connection.createStatement()) {
-            statement.execute(SqlConstants.getStringDeleteFileById(id));
+        try (PreparedStatement statement = connection.prepareStatement(SqlConstants.GET_DELETE_FILE_BY_ID)) {
+            statement.setLong(1, id);
+            statement.execute();
+            connection.commit();
         } catch (SQLException e) {
             throw new IllegalStateException(e);
         }
@@ -92,18 +98,18 @@ public class FileDao implements CrudRepository<File, Long> {
     @Override
     public File update(final File user) {
         Connection connection = PostgreSqlHelper.getConnection();
-        try (Statement statement = connection.createStatement()) {
-            if (statement.execute(SqlConstants.getStringUpdateFileByIdWithValues(user.getId(),
-                user.getName(),
-                user.getType(),
-                user.getUrl(),
-                user.getExtensionId()))) {
-                return user;
-            } else {
-                return null;
-            }
+        try (PreparedStatement statement = connection.prepareStatement(SqlConstants.GET_UPDATE_FILES_BY_ID_WITH_VALUES)) {
+            statement.setString(1, user.getName());
+            statement.setString(2, String.valueOf(user.getType()));
+            statement.setString(3, user.getUrl());
+            statement.setLong(4, user.getExtensionId());
+            statement.setLong(5, user.getId());
+            statement.execute();
+            connection.commit();
         } catch (SQLException e) {
             throw new IllegalStateException(e);
         }
+        return user;
     }
+
 }

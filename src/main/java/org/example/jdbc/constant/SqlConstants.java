@@ -1,7 +1,6 @@
 package org.example.jdbc.constant;
 
 import lombok.experimental.UtilityClass;
-import org.example.jdbc.model.dto.enums.Type;
 
 @UtilityClass
 public class SqlConstants {
@@ -20,31 +19,25 @@ public class SqlConstants {
         insert into files (name, type, url, extension_id) values (?, ?, ?, ?);
         """;
 
-    public static String getStringSelectFileById(final Long id) {
-        return String.format("select * from files where id = %d", id);
-    }
+    public static final String SELECT_FROM_FILES_WHERE_ID = """
+        select * from files where id = ?
+        """;
 
-    public static String getStringDeleteFileById(final Long id) {
-        return String.format("""
-            delete from files where id = %s;
-            commit;
-            """, id);
-    }
+    public static final String GET_DELETE_FILE_BY_ID = """
+        delete from files where id = ?;
+        """;
 
-    public static String getStringUpdateFileByIdWithValues(final Long id, final String name, final Type type, final String url, final Long extension) {
-        String str = String.format("""
-            update files
-            set name = '%s',
-                type = '%s',
-                url = '%s',
-                extension_id = %d
-            where id = % d;
-            commit;
-            """, name, Type.valueOf(String.valueOf(type)), url, extension, id);
-        return str;
-    }
+    public static final String GET_UPDATE_FILES_BY_ID_WITH_VALUES = """
+        update files
+            set name = ?,
+                type = ?,
+                url = ?,
+                extension_id = ?
+            where id = ?;
+        """;
 
-    public static String getStringSelectExtensionById(final Long id) {
-        return String.format("select * from extension_refl where id = %d", id);
-    }
+    public static final String GET_SELECT_EXTENSION_BY_ID = """
+        select * from extension_refl where id = ?
+        """;
+
 }

@@ -18,7 +18,7 @@ public class PostgreSQLJDBC {
 
             FileDao fileDao = new FileDao();
             ExtensionDao extensionDao = new ExtensionDao();
-            FileMapper fileMapper = new FileMapper(extensionDao);
+            FileMapper fileMapper = new FileMapper();
             FileService fileService = new FileService(fileDao, fileMapper, extensionDao);
 
             FileRsIns request = FileRsIns.builder()

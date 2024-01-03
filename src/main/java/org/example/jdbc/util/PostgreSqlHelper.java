@@ -51,15 +51,15 @@ public class PostgreSqlHelper {
             statement.execute(createFilesTableSql);
 
             createFilesTableSql = """
-                create table if not exists files
+                create table if not exists extension_refl
                 (
-                	id bigserial,
-                	name varchar(100) not null,
-                	type varchar(50),
-                	url varchar(255) not null,
-                	extension_id bigint not null,
-                	constraint files_pkey_id primary key (id),
-                	constraint files_fkey_extension_id foreign key (extension_id) references extension_refl(id)
+                    id bigserial,
+                    name varchar(100) not null,
+                    type varchar(50),
+                    url varchar(255) not null,
+                    extension_id bigint not null,
+                    constraint files_pkey_id primary key (id),
+                    constraint files_fkey_extension_id foreign key (extension_id) references extension_refl(id)
                 );
                 """;
             statement.execute(createFilesTableSql);

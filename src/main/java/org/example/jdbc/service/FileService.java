@@ -52,11 +52,12 @@ public class FileService {
     }
 
     public void update(final FileRs request) {
-        final File file = fileMapper.toFile(request);
+        Extension extension = extensionDao.findByName(request.getExt())
+            .orElseThrow(() -> new ServiceException(ErrorCode.ERR_CODE_002, request.getExt()));
+        final File file = fileMapper.toFile(request, extension);
         if (file.getExtensionId() == null) {
             throw new ServiceException(ErrorCode.ERR_CODE_002, request.getExt());
         }
         fileDao.update(file);
-        return;
     }
 }

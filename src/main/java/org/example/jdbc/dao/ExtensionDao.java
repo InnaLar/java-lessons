@@ -41,32 +41,31 @@ public class ExtensionDao implements CrudRepository<Extension, Long> {
     }
 
     @Override
-    public Optional<Extension> findById(Long id) {
+    public Optional<Extension> findById(final Long id) {
         Connection connection = PostgreSqlHelper.getConnection();
-        try (Statement statement = connection.createStatement()) {
-            ResultSet resultSet = statement.executeQuery(SqlConstants.getStringSelectExtensionById(id));
-            Extension extension = null;
-            while (resultSet.next()) {
-                extension = buildExtension(resultSet);
+        try (PreparedStatement statement = connection.prepareStatement(SqlConstants.GET_SELECT_EXTENSION_BY_ID)) {
+            statement.setLong(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return Optional.ofNullable(buildExtension(resultSet));
             }
-            return Optional.ofNullable(extension);
+            return Optional.empty();
         } catch (SQLException e) {
             throw new IllegalStateException(e);
         }
     }
 
     @Override
-    public Extension save(Extension user) {
+    public Extension save(final Extension user) {
         return null;
     }
 
     @Override
-    public void deleteById(Long id) {
-        return;
+    public void deleteById(final Long id) {
     }
 
     @Override
-    public Extension update(Extension user) {
+    public Extension update(final Extension user) {
         return null;
     }
 
@@ -75,9 +74,8 @@ public class ExtensionDao implements CrudRepository<Extension, Long> {
         try (PreparedStatement statement = connection.prepareStatement(SqlConstants.SELECT_FROM_EXTENSION_REFL_WHERE_NAME)) {
             statement.setString(1, name);
             ResultSet resultSet = statement.executeQuery();
-
             if (resultSet.next()) {
-                return Optional.of(buildExtension(resultSet));
+                return Optional.ofNullable(buildExtension(resultSet));
             }
             return Optional.empty();
         } catch (SQLException e) {
