@@ -1,4 +1,4 @@
-package org.example.jdbc.util;
+package org.example.db.jdbc.util;
 
 import lombok.experimental.UtilityClass;
 
@@ -10,24 +10,23 @@ import java.util.Properties;
 
 @UtilityClass
 public class PostgreSqlHelper {
-    private static Connection connection;
+    private static final Connection CONNECTION = createConnection();
 
-    public static Connection getConnection() {
+    private static Connection createConnection() {
         try {
-            if (connection == null) {
-                Properties properties = getCredentials();
+            Properties properties = getCredentials();
 
-                Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5433/storage", properties);
-                conn.setAutoCommit(false);
-                connection = conn;
-            }
-
-            return connection;
+            Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5433/storage", properties);
+            conn.setAutoCommit(false);
+            return conn;
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
             throw new IllegalStateException(e);
         }
 
+    }
+
+    public static Connection getConnection() {
+        return CONNECTION;
     }
 
     private static Properties getCredentials() {

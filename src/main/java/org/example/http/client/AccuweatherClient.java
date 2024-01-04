@@ -1,17 +1,17 @@
 package org.example.http.client;
 
 import lombok.RequiredArgsConstructor;
-import org.example.http.model.api.barbecueWeather.OutdoorRoot;
+import org.example.http.model.api.barbecueweather.OutdoorRoot;
 import org.example.http.model.api.currentconditions.CurrentConditionsRoot;
 import org.example.http.model.api.locations.TopcitiesRoot;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @RequiredArgsConstructor
 public class AccuweatherClient {
-    private final WebClient webClient;
     private static final String APIKEY = "apikey";
     private static final String API_KEY_VALUE = "dyKHmZXCEt9IF3mdJIjDuxZtpArMOLVv";
     private static final int BARBECUE_GROUP_ID = 6;
+    private final WebClient webClient;
 
     public TopcitiesRoot[] getTopcitiesRoot() {
         return webClient.get()

@@ -1,4 +1,4 @@
-package org.example.http.model.api.barbecueWeather;
+package org.example.http.model.api.barbecueweather;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-
+@SuppressWarnings("NM_CONFUSING")
 public class OutdoorRoot {
     @JsonProperty("Name")
     private String name;

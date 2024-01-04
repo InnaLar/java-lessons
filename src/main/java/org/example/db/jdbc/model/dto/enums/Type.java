@@ -1,4 +1,4 @@
-package org.example.jdbc.model.dto.enums;
+package org.example.db.jdbc.model.dto.enums;
 
 public enum Type {
     PERSONAL, LEGAL, EDUCATION

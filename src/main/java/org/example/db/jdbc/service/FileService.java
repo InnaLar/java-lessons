@@ -1,18 +1,17 @@
-package org.example.jdbc.service;
+package org.example.db.jdbc.service;
 
 import lombok.RequiredArgsConstructor;
-import org.example.jdbc.dao.ExtensionDao;
-import org.example.jdbc.dao.FileDao;
-import org.example.jdbc.exception.ErrorCode;
-import org.example.jdbc.exception.ServiceException;
-import org.example.jdbc.mapper.FileMapper;
-import org.example.jdbc.model.dto.FileRs;
-import org.example.jdbc.model.dto.FileRsIns;
-import org.example.jdbc.model.entity.Extension;
-import org.example.jdbc.model.entity.File;
+import org.example.db.jdbc.dao.ExtensionDao;
+import org.example.db.jdbc.dao.FileDao;
+import org.example.db.jdbc.exception.ErrorCode;
+import org.example.db.jdbc.exception.ServiceException;
+import org.example.db.jdbc.mapper.FileMapper;
+import org.example.db.jdbc.model.dto.FileRs;
+import org.example.db.jdbc.model.dto.FileRsIns;
+import org.example.db.jdbc.model.entity.Extension;
+import org.example.db.jdbc.model.entity.File;
 
 import java.util.List;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 public class FileService {
@@ -44,20 +43,14 @@ public class FileService {
     }
 
     public File findById(final Long id) {
-        Optional<File> file = fileDao.findById(id);
-        if (file.isEmpty()) {
-            throw new ServiceException(ErrorCode.ERR_CODE_001, id);
-        }
-        return file.get();
+        return fileDao.findById(id)
+            .orElseThrow(() -> new ServiceException(ErrorCode.ERR_CODE_001, id));
     }
 
     public void update(final FileRs request) {
         Extension extension = extensionDao.findByName(request.getExt())
             .orElseThrow(() -> new ServiceException(ErrorCode.ERR_CODE_002, request.getExt()));
         final File file = fileMapper.toFile(request, extension);
-        if (file.getExtensionId() == null) {
-            throw new ServiceException(ErrorCode.ERR_CODE_002, request.getExt());
-        }
         fileDao.update(file);
     }
 }

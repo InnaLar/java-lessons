@@ -1,4 +1,4 @@
-package org.example.jdbc.exception;
+package org.example.db.jdbc.exception;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

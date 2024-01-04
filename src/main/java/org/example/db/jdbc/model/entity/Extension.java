@@ -1,4 +1,4 @@
-package org.example.jdbc.model.entity;
+package org.example.db.jdbc.model.entity;
 
 import lombok.Builder;
 import lombok.Data;

@@ -17,6 +17,7 @@ public class CityCurrentWeather {
     private double value;
     private String unit;
 
+    @Override
     public String toString() {
         return String.format("In %s, %s %s %f, %s", city, country, weatherText, value, unit);
     }

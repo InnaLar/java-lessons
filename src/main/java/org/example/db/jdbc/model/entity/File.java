@@ -1,8 +1,8 @@
-package org.example.jdbc.model.entity;
+package org.example.db.jdbc.model.entity;
 
 import lombok.Builder;
 import lombok.Data;
-import org.example.jdbc.model.dto.enums.Type;
+import org.example.db.jdbc.model.dto.enums.Type;
 
 import java.util.Objects;
 

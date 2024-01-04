@@ -1,10 +1,10 @@
-package org.example.jdbc.dao;
+package org.example.db.jdbc.dao;
 
 import org.example.hw6.dao.CrudRepository;
-import org.example.jdbc.constant.SqlConstants;
-import org.example.jdbc.model.dto.enums.Type;
-import org.example.jdbc.model.entity.File;
-import org.example.jdbc.util.PostgreSqlHelper;
+import org.example.db.jdbc.constant.SqlConstants;
+import org.example.db.jdbc.model.dto.enums.Type;
+import org.example.db.jdbc.model.entity.File;
+import org.example.db.jdbc.util.PostgreSqlHelper;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -30,8 +30,8 @@ public class FileDao implements CrudRepository<File, Long> {
     @Override
     public List<File> findAll() {
         Connection connection = PostgreSqlHelper.getConnection();
-        try (Statement statement = connection.createStatement()) {
-            ResultSet resultSet = statement.executeQuery(SqlConstants.SELECT_FROM_FILES);
+        try (Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(SqlConstants.SELECT_FROM_FILES)) {
 
             List<File> fileList = new ArrayList<>();
             while (resultSet.next()) {
@@ -39,6 +39,7 @@ public class FileDao implements CrudRepository<File, Long> {
             }
 
             return fileList;
+
         } catch (SQLException e) {
             throw new IllegalStateException(e);
         }
@@ -50,11 +51,12 @@ public class FileDao implements CrudRepository<File, Long> {
         try (PreparedStatement statement =
                  connection.prepareStatement(SqlConstants.SELECT_FROM_FILES_WHERE_ID)) {
             statement.setLong(1, id);
-            ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                return Optional.ofNullable(buildFile(resultSet));
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    return Optional.ofNullable(buildFile(resultSet));
+                }
+                return Optional.empty();
             }
-            return Optional.empty();
         } catch (SQLException e) {
             throw new IllegalStateException(e);
         }

@@ -1,6 +1,6 @@
 package org.example.http.mapper;
 
-import org.example.http.model.api.barbecueWeather.OutdoorRoot;
+import org.example.http.model.api.barbecueweather.OutdoorRoot;
 import org.example.http.model.entity.OutdoorConditions;
 
 public class BarbecueConditionsMapper {

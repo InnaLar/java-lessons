@@ -1,9 +1,9 @@
-package org.example.jdbc.dao;
+package org.example.db.jdbc.dao;
 
 import org.example.hw6.dao.CrudRepository;
-import org.example.jdbc.constant.SqlConstants;
-import org.example.jdbc.model.entity.Extension;
-import org.example.jdbc.util.PostgreSqlHelper;
+import org.example.db.jdbc.constant.SqlConstants;
+import org.example.db.jdbc.model.entity.Extension;
+import org.example.db.jdbc.util.PostgreSqlHelper;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

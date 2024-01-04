@@ -1,4 +1,4 @@
-package org.example.jdbc.model.dto;
+package org.example.db.jdbc.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

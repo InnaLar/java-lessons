@@ -1,10 +1,10 @@
-package org.example.jdbc.mapper;
+package org.example.db.jdbc.mapper;
 
-import org.example.jdbc.model.dto.FileRs;
-import org.example.jdbc.model.dto.FileRsIns;
-import org.example.jdbc.model.dto.enums.Type;
-import org.example.jdbc.model.entity.Extension;
-import org.example.jdbc.model.entity.File;
+import org.example.db.jdbc.model.dto.FileRs;
+import org.example.db.jdbc.model.dto.FileRsIns;
+import org.example.db.jdbc.model.dto.enums.Type;
+import org.example.db.jdbc.model.entity.Extension;
+import org.example.db.jdbc.model.entity.File;
 
 public class FileMapper {
     public FileRs toFileRs(final File file, final Extension extension) {

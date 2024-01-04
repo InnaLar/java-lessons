@@ -1,4 +1,4 @@
-package org.example.jdbc.constant;
+package org.example.db.jdbc.constant;
 
 import lombok.experimental.UtilityClass;
 

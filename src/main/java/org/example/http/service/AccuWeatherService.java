@@ -4,13 +4,14 @@ import lombok.RequiredArgsConstructor;
 import org.example.http.client.AccuweatherClient;
 import org.example.http.mapper.BarbecueConditionsMapper;
 import org.example.http.mapper.CurrentWeatherMapper;
-import org.example.http.model.api.barbecueWeather.OutdoorRoot;
+import org.example.http.model.api.barbecueweather.OutdoorRoot;
 import org.example.http.model.api.currentconditions.CurrentConditionsRoot;
 import org.example.http.model.api.locations.TopcitiesRoot;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 // TODO: json что это
@@ -24,6 +25,7 @@ import java.util.Arrays;
 // 3. Получение погоды с https://developer.accuweather.com/accuweather-current-conditions-api/apis/get/currentconditions/v1/%7BlocationKey%7D
 
 @RequiredArgsConstructor
+@SuppressWarnings("PMD.SystemPrintln")
 public class AccuWeatherService {
     private final AccuweatherClient accuweatherClient;
     private final CurrentWeatherMapper currentWeatherMapper;
@@ -36,10 +38,13 @@ public class AccuWeatherService {
             System.out.println(topcity.getKey() + ", id " + topcity.getEnglishName());
         }
 
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8))) {
             System.out.println("Введите номер города.");
 
             String indexCity = reader.readLine();
+            if (indexCity == null) {
+                throw new IllegalStateException("Неверный ввод");
+            }
             int nCity = Integer.parseInt(indexCity);
 
             TopcitiesRoot topcitiesRoot = Arrays.stream(accuWeatherTopCities)
@@ -65,7 +70,7 @@ public class AccuWeatherService {
                 .map(barbecueConditionsMapper::toOutdoorConditions)
                 .forEach(System.out::println);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new IllegalStateException(e);
         }
     }
 
