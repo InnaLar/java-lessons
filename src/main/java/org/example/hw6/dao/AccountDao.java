@@ -40,11 +40,11 @@ public class AccountDao implements CrudRepository<Account, Long> {
     }
 
     @Override
-    public Account save(final Account account) {
+    public Account save(final Account t) {
         try {
-           Files.writeString(path, accountMapper.toCsvRow(account) + System.lineSeparator(),
+           Files.writeString(path, accountMapper.toCsvRow(t) + System.lineSeparator(),
                StandardOpenOption.CREATE, StandardOpenOption.WRITE, StandardOpenOption.APPEND);
-           return account;
+           return t;
         } catch (IOException e) {
             throw new IllegalArgumentException(e);
         }
@@ -58,16 +58,16 @@ public class AccountDao implements CrudRepository<Account, Long> {
     }
 
     @Override
-    public Account update(final Account account) {
+    public Account update(final Account t) {
         ArrayList<Account> accounts = new ArrayList<>(findAll());
         accounts.replaceAll(account1 -> {
-            if (account1.getUserId().equals(account.getId())) {
-                return account;
+            if (account1.getUserId().equals(t.getId())) {
+                return t;
             }
             return account1;
         });
         update(accounts);
-        return account;
+        return t;
     }
 
     private void update(final List<Account> accounts) {

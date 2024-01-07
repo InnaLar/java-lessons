@@ -63,22 +63,22 @@ public class FileDao implements CrudRepository<File, Long> {
     }
 
     @Override
-    public File save(final File user) {
+    public File save(final File t) {
         try (Connection connection = PostgreSqlHelper.getConnection();
             PreparedStatement statement =
                  connection.prepareStatement(SqlConstants.INSERT_INTO_FILES_NAME_TYPE_URL_EXTENSION_VALUES_S_S_S_D,
                      Statement.RETURN_GENERATED_KEYS)) {
-            statement.setString(1, user.getName());
-            statement.setString(2, user.getType().name());
-            statement.setString(3, user.getUrl());
-            statement.setLong(4, user.getExtensionId());
+            statement.setString(1, t.getName());
+            statement.setString(2, t.getType().name());
+            statement.setString(3, t.getUrl());
+            statement.setLong(4, t.getExtensionId());
             statement.executeUpdate();
             connection.commit();
 
             try (ResultSet keys = statement.getGeneratedKeys()) {
                 keys.next();
-                user.setId(keys.getLong(1));
-                return user;
+                t.setId(keys.getLong(1));
+                return t;
             }
         } catch (SQLException e) {
             throw new IllegalStateException(e);
@@ -98,20 +98,20 @@ public class FileDao implements CrudRepository<File, Long> {
     }
 
     @Override
-    public File update(final File user) {
+    public File update(final File t) {
         try (Connection connection = PostgreSqlHelper.getConnection();
             PreparedStatement statement = connection.prepareStatement(SqlConstants.GET_UPDATE_FILES_BY_ID_WITH_VALUES)) {
-            statement.setString(1, user.getName());
-            statement.setString(2, String.valueOf(user.getType()));
-            statement.setString(3, user.getUrl());
-            statement.setLong(4, user.getExtensionId());
-            statement.setLong(5, user.getId());
+            statement.setString(1, t.getName());
+            statement.setString(2, String.valueOf(t.getType()));
+            statement.setString(3, t.getUrl());
+            statement.setLong(4, t.getExtensionId());
+            statement.setLong(5, t.getId());
             statement.execute();
             connection.commit();
         } catch (SQLException e) {
             throw new IllegalStateException(e);
         }
-        return user;
+        return t;
     }
 
 }

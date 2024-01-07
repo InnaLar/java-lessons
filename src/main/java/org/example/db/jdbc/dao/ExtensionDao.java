@@ -57,7 +57,7 @@ public class ExtensionDao implements CrudRepository<Extension, Long> {
     }
 
     @Override
-    public Extension save(final Extension user) {
+    public Extension save(final Extension t) {
         // won't be implemented
         return null;
     }
@@ -68,7 +68,7 @@ public class ExtensionDao implements CrudRepository<Extension, Long> {
     }
 
     @Override
-    public Extension update(final Extension user) {
+    public Extension update(final Extension t) {
         // won't be implemented
         return null;
     }

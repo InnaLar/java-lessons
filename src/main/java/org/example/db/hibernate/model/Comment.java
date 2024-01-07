@@ -1,12 +1,11 @@
 package org.example.db.hibernate.model;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,27 +18,22 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
-@Getter
-@Setter
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 @Accessors(chain = true)
+@Builder
 @ToString
 
 @Entity
-@Table(name = "post")
-public class Post {
+@Table(name = "comment")
+public class Comment {
     @Id
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "title", nullable = false)
-    private String title;
-    @Column(name = "content", nullable = false)
     private String content;
 
     @CreationTimestamp
@@ -49,14 +43,8 @@ public class Post {
     @Column(name = "update_date_time")
     private LocalDateTime updateDateTime;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @Builder.Default
+    @ManyToOne(fetch = FetchType.LAZY)
     @ToString.Exclude
-    private List<Comment> commentList = new ArrayList<>();
+    private Post post;
 
-    public Post withComment(final Comment comment) {
-        this.commentList.add(comment);
-        comment.setPost(this);
-        return this;
-    }
 }

@@ -41,14 +41,14 @@ public class UserFileDao implements CrudRepository<User, Long> {
     /**
      * Adds a user to the file by writing their information in CSV format.
      *
-     * @param user the user to be added
+     * @param t the user to be added
      */
     @Override
-    public User save(final User user) {
+    public User save(final User t) {
         try {
-            Files.writeString(path, System.lineSeparator() + userMapper.toCsvRow(user),
+            Files.writeString(path, System.lineSeparator() + userMapper.toCsvRow(t),
                 StandardOpenOption.CREATE, StandardOpenOption.WRITE, StandardOpenOption.APPEND);
-            return user;
+            return t;
         } catch (IOException e) {
             throw new IllegalArgumentException(e);
         }
@@ -62,17 +62,17 @@ public class UserFileDao implements CrudRepository<User, Long> {
     }
 
     @Override
-    public User update(final User user) {
+    public User update(final User t) {
         final ArrayList<User> users = new ArrayList<>(findAll());
         users.replaceAll(user1 -> {
-            if (user1.getId().equals(user.getId())) {
-                return user;
+            if (user1.getId().equals(t.getId())) {
+                return t;
             }
             return user1;
         });
 
         update(users);
-        return user;
+        return t;
     }
 
     private void update(final List<User> users) {
