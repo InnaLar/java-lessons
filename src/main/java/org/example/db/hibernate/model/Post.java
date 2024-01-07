@@ -40,4 +40,7 @@ public class Post {
     @UpdateTimestamp
     @Column(name = "update_date_time")
     private LocalDateTime updateDateTime;
+    public String ToString() {
+        return String.format("title %s content %s", title, content);
+    }
 }

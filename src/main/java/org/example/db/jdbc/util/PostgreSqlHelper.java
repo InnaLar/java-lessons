@@ -37,8 +37,8 @@ public class PostgreSqlHelper {
     }
 
     public static void doMigrate() {
-        Connection connection = PostgreSqlHelper.getConnection();
-        try (Statement statement = connection.createStatement()) {
+        try (Connection connection = PostgreSqlHelper.getConnection();
+             Statement statement = connection.createStatement()) {
             String createFilesTableSql = """
                 create table if not exists extension_refl
                 (

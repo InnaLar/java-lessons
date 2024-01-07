@@ -10,6 +10,7 @@ import org.example.db.jdbc.util.PostgreSqlHelper;
 
 import java.util.List;
 
+@SuppressWarnings("PMD.SystemPrintln")
 public class PostgreSQLJDBC {
     public static void main(final String[] args) {
         PostgreSqlHelper.doMigrate();

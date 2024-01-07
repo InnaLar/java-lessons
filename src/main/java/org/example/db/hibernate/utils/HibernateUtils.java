@@ -7,9 +7,13 @@ import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class HibernateUtils {
-
+    private static EntityManager entityManager;
     public static EntityManager getEntityManager() {
+        if (entityManager == null || !entityManager.isOpen()) {
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("JAVA");
-        return entityManagerFactory.createEntityManager();
+            entityManager = entityManagerFactory.createEntityManager();
+            return entityManager;
+    }
+        return entityManager;
     }
 }

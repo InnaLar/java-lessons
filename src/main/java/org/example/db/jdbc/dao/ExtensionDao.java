@@ -1,9 +1,9 @@
 package org.example.db.jdbc.dao;
 
-import org.example.hw6.dao.CrudRepository;
 import org.example.db.jdbc.constant.SqlConstants;
 import org.example.db.jdbc.model.entity.Extension;
 import org.example.db.jdbc.util.PostgreSqlHelper;
+import org.example.hw6.dao.CrudRepository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -25,9 +25,9 @@ public class ExtensionDao implements CrudRepository<Extension, Long> {
 
     @Override
     public List<Extension> findAll() {
-        Connection connection = PostgreSqlHelper.getConnection();
-        try (Statement statement = connection.createStatement()) {
-            ResultSet resultSet = statement.executeQuery(SqlConstants.SELECT_FROM_EXTENSION_REFL);
+        try (Connection connection = PostgreSqlHelper.getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(SqlConstants.SELECT_FROM_EXTENSION_REFL)) {
 
             List<Extension> extensionList = new ArrayList<>();
             while (resultSet.next()) {
@@ -42,14 +42,15 @@ public class ExtensionDao implements CrudRepository<Extension, Long> {
 
     @Override
     public Optional<Extension> findById(final Long id) {
-        Connection connection = PostgreSqlHelper.getConnection();
-        try (PreparedStatement statement = connection.prepareStatement(SqlConstants.GET_SELECT_EXTENSION_BY_ID)) {
+        try (Connection connection = PostgreSqlHelper.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SqlConstants.GET_SELECT_EXTENSION_BY_ID)) {
             statement.setLong(1, id);
-            ResultSet resultSet = statement.executeQuery();
+            try (ResultSet resultSet = statement.executeQuery()) {
             if (resultSet.next()) {
                 return Optional.ofNullable(buildExtension(resultSet));
             }
             return Optional.empty();
+            }
         } catch (SQLException e) {
             throw new IllegalStateException(e);
         }
@@ -57,27 +58,31 @@ public class ExtensionDao implements CrudRepository<Extension, Long> {
 
     @Override
     public Extension save(final Extension user) {
+        // won't be implemented
         return null;
     }
 
     @Override
     public void deleteById(final Long id) {
+        // won't be implemented
     }
 
     @Override
     public Extension update(final Extension user) {
+        // won't be implemented
         return null;
     }
 
     public Optional<Extension> findByName(final String name) {
-        Connection connection = PostgreSqlHelper.getConnection();
-        try (PreparedStatement statement = connection.prepareStatement(SqlConstants.SELECT_FROM_EXTENSION_REFL_WHERE_NAME)) {
+        try (Connection connection = PostgreSqlHelper.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SqlConstants.SELECT_FROM_EXTENSION_REFL_WHERE_NAME)) {
             statement.setString(1, name);
-            ResultSet resultSet = statement.executeQuery();
+            try (ResultSet resultSet = statement.executeQuery()) {
             if (resultSet.next()) {
                 return Optional.ofNullable(buildExtension(resultSet));
             }
             return Optional.empty();
+            }
         } catch (SQLException e) {
             throw new IllegalStateException(e);
         }

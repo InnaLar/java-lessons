@@ -14,6 +14,7 @@ public class OutdoorConditions {
     private int value;
     private String category;
 
+    @Override
     public String toString() {
         return String.format("%s value %d %s", name, value, category);
     }

@@ -1,10 +1,10 @@
 package org.example.db.jdbc.dao;
 
-import org.example.hw6.dao.CrudRepository;
 import org.example.db.jdbc.constant.SqlConstants;
 import org.example.db.jdbc.model.dto.enums.Type;
 import org.example.db.jdbc.model.entity.File;
 import org.example.db.jdbc.util.PostgreSqlHelper;
+import org.example.hw6.dao.CrudRepository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -29,8 +29,8 @@ public class FileDao implements CrudRepository<File, Long> {
 
     @Override
     public List<File> findAll() {
-        Connection connection = PostgreSqlHelper.getConnection();
-        try (Statement statement = connection.createStatement();
+        try (Connection connection = PostgreSqlHelper.getConnection();
+            Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(SqlConstants.SELECT_FROM_FILES)) {
 
             List<File> fileList = new ArrayList<>();
@@ -47,8 +47,8 @@ public class FileDao implements CrudRepository<File, Long> {
 
     @Override
     public Optional<File> findById(final Long id) {
-        Connection connection = PostgreSqlHelper.getConnection();
-        try (PreparedStatement statement =
+        try (Connection connection = PostgreSqlHelper.getConnection();
+            PreparedStatement statement =
                  connection.prepareStatement(SqlConstants.SELECT_FROM_FILES_WHERE_ID)) {
             statement.setLong(1, id);
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -64,8 +64,8 @@ public class FileDao implements CrudRepository<File, Long> {
 
     @Override
     public File save(final File user) {
-        Connection connection = PostgreSqlHelper.getConnection();
-        try (PreparedStatement statement =
+        try (Connection connection = PostgreSqlHelper.getConnection();
+            PreparedStatement statement =
                  connection.prepareStatement(SqlConstants.INSERT_INTO_FILES_NAME_TYPE_URL_EXTENSION_VALUES_S_S_S_D,
                      Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, user.getName());
@@ -87,8 +87,8 @@ public class FileDao implements CrudRepository<File, Long> {
 
     @Override
     public void deleteById(final Long id) {
-        Connection connection = PostgreSqlHelper.getConnection();
-        try (PreparedStatement statement = connection.prepareStatement(SqlConstants.GET_DELETE_FILE_BY_ID)) {
+        try (Connection connection = PostgreSqlHelper.getConnection();
+            PreparedStatement statement = connection.prepareStatement(SqlConstants.GET_DELETE_FILE_BY_ID)) {
             statement.setLong(1, id);
             statement.execute();
             connection.commit();
@@ -99,8 +99,8 @@ public class FileDao implements CrudRepository<File, Long> {
 
     @Override
     public File update(final File user) {
-        Connection connection = PostgreSqlHelper.getConnection();
-        try (PreparedStatement statement = connection.prepareStatement(SqlConstants.GET_UPDATE_FILES_BY_ID_WITH_VALUES)) {
+        try (Connection connection = PostgreSqlHelper.getConnection();
+            PreparedStatement statement = connection.prepareStatement(SqlConstants.GET_UPDATE_FILES_BY_ID_WITH_VALUES)) {
             statement.setString(1, user.getName());
             statement.setString(2, String.valueOf(user.getType()));
             statement.setString(3, user.getUrl());
