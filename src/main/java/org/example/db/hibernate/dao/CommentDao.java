@@ -1,37 +1,37 @@
 package org.example.db.hibernate.dao;
 
 import jakarta.persistence.EntityManager;
-import org.example.db.hibernate.model.entity.Post;
+import org.example.db.hibernate.model.entity.Comment;
 import org.example.db.hibernate.utils.HibernateUtils;
 import org.example.hw6.dao.CrudRepository;
 
 import java.util.List;
 import java.util.Optional;
 
-public class PostDao implements CrudRepository<Post, Long> {
-
+public class CommentDao implements CrudRepository<Comment, Long> {
     @Override
-    public List<Post> findAll() {
+    public List<Comment> findAll() {
         try (EntityManager entityManager = HibernateUtils.getEntityManager()) {
-            return entityManager.createQuery("from Post", Post.class).getResultList();
+        return entityManager.createQuery("from Comment com join fetch com.post ",
+                Comment.class)
+            .getResultList();
         }
     }
 
     @Override
-    public Optional<Post> findById(final Long id) {
+    public Optional<Comment> findById(final Long id) {
         try (EntityManager entityManager = HibernateUtils.getEntityManager()) {
-            Post value = entityManager.find(Post.class, id);
-            return Optional.ofNullable(value);
+            return Optional.ofNullable(entityManager.find(Comment.class, id));
         }
     }
 
     @Override
-    public Post save(final Post t) {
+    public Comment save(final Comment comment) {
         try (EntityManager entityManager = HibernateUtils.getEntityManager()) {
             entityManager.getTransaction().begin();
-            entityManager.persist(t);
+            entityManager.persist(comment);
             entityManager.getTransaction().commit();
-            return t;
+            return comment;
         }
     }
 
@@ -39,23 +39,23 @@ public class PostDao implements CrudRepository<Post, Long> {
     public void deleteById(final Long id) {
         try (EntityManager entityManager = HibernateUtils.getEntityManager()) {
             entityManager.getTransaction().begin();
-            Post post = entityManager.find(Post.class, id);
-            entityManager.remove(post);
+            Comment comment = entityManager.find(Comment.class, id);
+            entityManager.remove(comment);
             entityManager.getTransaction().commit();
         }
     }
 
     @Override
-    public Post update(final Post newPost) {
+    public Comment update(final Comment newComment) {
         try (EntityManager entityManager = HibernateUtils.getEntityManager()) {
             entityManager.getTransaction().begin();
-            Post post = entityManager.find(Post.class, newPost.getId());
+            Comment comment = entityManager.find(Comment.class, newComment.getId());
 
-            post.setTitle(newPost.getTitle());
-            post.setContent(newPost.getContent());
+            comment.setPost(newComment.getPost());
+            comment.setContent(newComment.getContent());
 
             entityManager.getTransaction().commit();
-            return post;
+            return comment;
         }
     }
 }

@@ -1,4 +1,4 @@
-package org.example.db.hibernate.model;
+package org.example.db.hibernate.model.entity;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -36,7 +36,6 @@ public class Post {
     @Id
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
     private Long id;
-
     @Column(name = "title", nullable = false)
     private String title;
     @Column(name = "content", nullable = false)
@@ -54,9 +53,20 @@ public class Post {
     @ToString.Exclude
     private List<Comment> commentList = new ArrayList<>();
 
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @Builder.Default
+    @ToString.Exclude
+    private List<Subscriber> subscriberList = new ArrayList<>();
+
     public Post withComment(final Comment comment) {
         this.commentList.add(comment);
         comment.setPost(this);
+        return this;
+    }
+
+    public Post withSubscriber(final Subscriber subscriber) {
+        this.subscriberList.add(subscriber);
+        subscriber.setPost(this);
         return this;
     }
 }

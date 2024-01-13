@@ -7,7 +7,8 @@ import lombok.RequiredArgsConstructor;
 @Getter
 public enum ErrorCode {
 
-    ERR_CODE_001("ERR.CODE.001", "Post with id %s not found.");
+    ERR_CODE_001("ERR.CODE.001", "Post with id %s not found."),
+    ERR_CODE_002("ERR.CODE.002", "Comment with id %s not found.");
 
     private final String code;
     private final String description;

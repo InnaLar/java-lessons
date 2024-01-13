@@ -1,4 +1,4 @@
-package org.example.db.hibernate.model;
+package org.example.db.hibernate.model.entity;
 
 import jakarta.persistence.Column;
 import org.hibernate.annotations.CreationTimestamp;

@@ -1,9 +1,10 @@
-package org.example.db.hibernate.model;
+package org.example.db.hibernate.model.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
@@ -15,7 +16,6 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -28,23 +28,18 @@ import java.time.LocalDateTime;
 @ToString
 
 @Entity
-@Table(name = "comment")
-public class Comment {
+@Table(name = "subscriber")
+public class Subscriber {
     @Id
-    @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    private String content;
-
+    @Column(name = "nickName", nullable = false)
+    private String nickName;
     @CreationTimestamp
     @Column(name = "create_date_time", nullable = false, updatable = false)
     private LocalDateTime createDateTime;
-    @UpdateTimestamp
-    @Column(name = "update_date_time")
-    private LocalDateTime updateDateTime;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @ToString.Exclude
     private Post post;
-
 }
