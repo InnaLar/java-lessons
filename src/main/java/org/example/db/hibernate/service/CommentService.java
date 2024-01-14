@@ -1,6 +1,5 @@
 package org.example.db.hibernate.service;
 
-import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.example.db.hibernate.dao.CommentDao;
 import org.example.db.hibernate.dao.PostDao;
@@ -11,11 +10,12 @@ import org.example.db.hibernate.model.dto.PostCommentRs;
 import org.example.db.hibernate.model.dto.UpdateCommentDto;
 import org.example.db.hibernate.model.entity.Comment;
 import org.example.db.hibernate.model.entity.Post;
-import org.example.db.hibernate.utils.HibernateUtils;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
 
+@Component
 @RequiredArgsConstructor
 public class CommentService {
     private final CommentDao commentDao;
@@ -27,8 +27,8 @@ public class CommentService {
     }
 
     public Comment findById(final Long id) {
-       return commentDao.findById(id)
-           .orElseThrow(() -> new ServiceException(ErrorCode.ERR_CODE_002, id));
+        return commentDao.findById(id)
+            .orElseThrow(() -> new ServiceException(ErrorCode.ERR_CODE_002, id));
     }
 
     public Comment save(final Comment comment) {
@@ -43,7 +43,7 @@ public class CommentService {
     }
 
     public void deleteById(final Long id) {
-               commentDao.deleteById(id);
+        commentDao.deleteById(id);
     }
 
     public void savePostId(final PostCommentRs request) {

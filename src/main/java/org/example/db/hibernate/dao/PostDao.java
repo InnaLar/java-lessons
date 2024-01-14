@@ -4,10 +4,14 @@ import jakarta.persistence.EntityManager;
 import org.example.db.hibernate.model.entity.Post;
 import org.example.db.hibernate.utils.HibernateUtils;
 import org.example.hw6.dao.CrudRepository;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Component
 public class PostDao implements CrudRepository<Post, Long> {
 
     @Override

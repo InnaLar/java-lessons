@@ -5,10 +5,12 @@ import org.example.db.hibernate.model.dto.UpdateCommentDto;
 import org.example.db.hibernate.model.entity.Comment;
 import org.example.db.hibernate.utils.HibernateUtils;
 import org.example.hw6.dao.CrudRepository;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
 
+@Component
 public class CommentDao implements CrudRepository<Comment, Long> {
     @Override
     public List<Comment> findAll() {

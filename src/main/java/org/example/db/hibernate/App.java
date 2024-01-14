@@ -1,28 +1,28 @@
 package org.example.db.hibernate;
 
 import jakarta.persistence.EntityManager;
-import org.example.db.hibernate.dao.CommentDao;
-import org.example.db.hibernate.dao.PostDao;
-import org.example.db.hibernate.mapper.CommentMapper;
 import org.example.db.hibernate.model.dto.PostCommentRs;
 import org.example.db.hibernate.model.entity.Comment;
 import org.example.db.hibernate.model.entity.Post;
 import org.example.db.hibernate.model.entity.Subscriber;
 import org.example.db.hibernate.service.CommentService;
 import org.example.db.hibernate.utils.HibernateUtils;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
 
 import java.util.List;
 import java.util.Random;
 
 @SuppressWarnings({"PMD.SystemPrintln", "ExecutableStatementCount"})
+@SpringBootApplication
 public class App {
     private static final Random RANDOM = new Random();
 
     public static void main(final String[] args) {
-        PostDao postDao = new PostDao();
-        CommentDao commentDao = new CommentDao();
-        CommentMapper commentMapper = new CommentMapper();
-        CommentService commentService = new CommentService(commentDao, postDao, commentMapper);
+        ConfigurableApplicationContext applicationContext = SpringApplication.run(App.class, args);
+        CommentService commentService = applicationContext.getBean("commentService", CommentService.class);
+
         long randomId;
 
         try (EntityManager entityManager = HibernateUtils.getEntityManager()) {
