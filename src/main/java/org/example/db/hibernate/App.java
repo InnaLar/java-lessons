@@ -4,7 +4,7 @@ import jakarta.persistence.EntityManager;
 import org.example.db.hibernate.dao.CommentDao;
 import org.example.db.hibernate.dao.PostDao;
 import org.example.db.hibernate.mapper.CommentMapper;
-import org.example.db.hibernate.model.dto.PostCommentRS;
+import org.example.db.hibernate.model.dto.PostCommentRs;
 import org.example.db.hibernate.model.entity.Comment;
 import org.example.db.hibernate.model.entity.Post;
 import org.example.db.hibernate.model.entity.Subscriber;
@@ -15,9 +15,6 @@ import java.util.List;
 import java.util.Random;
 
 @SuppressWarnings({"PMD.SystemPrintln", "ExecutableStatementCount"})
-
-
-
 public class App {
     private static final Random RANDOM = new Random();
 
@@ -78,9 +75,9 @@ public class App {
         //Создание коммента к посту
         try (EntityManager entityManager = HibernateUtils.getEntityManager()) {
             entityManager.getTransaction().begin();
-            PostCommentRS request = PostCommentRS.builder()
+            PostCommentRs request = PostCommentRs.builder()
                 .content("comment4")
-                .idPost(1L)
+                .postId(1L)
                 .build();
 
             commentService.savePostId(request);

@@ -5,21 +5,15 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class PostCommentRS {
-    private Long idPost;
+@ToString
+public class PostCommentRs {
+    private Long postId;
     private String content;
-
-    @Override
-    public String toString() {
-        return "PostCommentRS{"
-            + "idPost=" + idPost
-            + ", content='" + content + '\''
-            + '}';
-    }
 }
